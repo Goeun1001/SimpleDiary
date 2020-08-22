@@ -73,9 +73,9 @@ public class MemoAdapter extends RecyclerView.Adapter<MemoAdapter.MyViewHolder>{
        holder.textdate.setText(memo.getDate());
        holder.textmemo.setText(memo.getEvent());
        Drawable feelingDrawable = context.getResources().getDrawable(R.drawable.smile);
-       Drawable weatherDrawable = context.getResources().getDrawable(R.drawable.smile);
+       Drawable weatherDrawable = context.getResources().getDrawable(R.drawable.cloud);
        holder.feeling.setImageDrawable(feelingDrawable);
-       holder.feeling.setImageDrawable(weatherDrawable);
+       holder.weather.setImageDrawable(weatherDrawable);
 
     }
 
