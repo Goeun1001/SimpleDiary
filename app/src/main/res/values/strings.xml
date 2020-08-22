@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Memo</string>
+    <string name="app_name">한 줄 일기장</string>
     <string name="action_settings">Settings</string>
     <string name="activity_title_home">Memo</string>
     <string name="no_memo">No Memo found!</string>

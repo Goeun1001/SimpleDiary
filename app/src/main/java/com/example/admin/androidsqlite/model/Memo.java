@@ -18,9 +18,7 @@ public class Memo {
         this.id=id;
         this.date = date;
         this.event = event;
-
     }
-
 
     public int getId() {
         return id;

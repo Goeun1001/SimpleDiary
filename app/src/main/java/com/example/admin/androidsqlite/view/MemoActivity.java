@@ -38,7 +38,6 @@ import java.util.List;
 
 public class MemoActivity extends AppCompatActivity {
 
-
     private MemoAdapter memoAdapter;
     private RecyclerView recyclerView;
     private List<Memo> memoList = new ArrayList<>();
@@ -55,11 +54,12 @@ public class MemoActivity extends AppCompatActivity {
     String date;
     Memo memo;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_memo);
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -73,20 +73,15 @@ public class MemoActivity extends AppCompatActivity {
         recyclerView.addItemDecoration(new MyDividerItemDecoration(this, LinearLayoutManager.VERTICAL, 16));
         recyclerView.setAdapter(memoAdapter);
 
-
-
-
         dbh = new DatabaseHelper(getApplicationContext());
 
         setData();
         showEmptyMemo();
 
-
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(this, recyclerView, new RecyclerTouchListener.ClickListener() {
 
             @Override
             public void onClick(View view, int position) {
-
                showActionsDialog(position);
 
             }
@@ -94,10 +89,8 @@ public class MemoActivity extends AppCompatActivity {
             @Override
             public void onLongClick(View view, int position) {
 
-              //  showActionsDialog(position);
             }
         }));
-
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -106,8 +99,6 @@ public class MemoActivity extends AppCompatActivity {
                 showMemoDialog();
             }
         });
-
-
     }
 
 
@@ -146,7 +137,6 @@ public class MemoActivity extends AppCompatActivity {
         month = myCalendar.get(Calendar.MONTH);
         day = myCalendar.get(Calendar.DAY_OF_MONTH);
 
-
         LayoutInflater layoutInflaterAndroid = LayoutInflater.from(getApplicationContext());
         View view = layoutInflaterAndroid.inflate(R.layout.memo_dialog, null);
         AlertDialog.Builder alertDialogBuilderUserInput = new AlertDialog.Builder(MemoActivity.this);
@@ -155,9 +145,6 @@ public class MemoActivity extends AppCompatActivity {
         textDate = view.findViewById(R.id.txtdate);
         TextView dialogTitle = view.findViewById(R.id.dialog_title);
         ImageButton datebtn = view.findViewById(R.id.imgdate);
-
-
-
 
         dialogTitle.setText("Add Memo");
         if (month + 1 < 10) {
@@ -172,8 +159,6 @@ public class MemoActivity extends AppCompatActivity {
                 .setPositiveButton("Save", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialogBox, int id) {
 
-
-
                     }
                 })
                 .setNegativeButton("Cancel",
@@ -186,7 +171,6 @@ public class MemoActivity extends AppCompatActivity {
         final AlertDialog alertDialog = alertDialogBuilderUserInput.create();
         alertDialog.show();
 
-
         datebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -195,9 +179,6 @@ public class MemoActivity extends AppCompatActivity {
                         myCalendar.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
-
-
-
 
        updateDisplay();
 
@@ -216,15 +197,12 @@ public class MemoActivity extends AppCompatActivity {
                     alertDialog.dismiss();
                 }
 
-
-
             }
         });
     }
 
 
     private void showActionsDialog(final int position) {
-
         AlertDialog.Builder builder = new AlertDialog.Builder(MemoActivity.this);
         builder
                 .setCancelable(false).setTitle("Choose Option").setMessage("Delete or Update Memo?")
@@ -236,16 +214,12 @@ public class MemoActivity extends AppCompatActivity {
                 .setNegativeButton("Delete",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialogBox, int id) {
-
                                 deleteData(position);
-
                                 memoList.remove(position);
                                 recyclerView.removeViewAt(position);
                                 memoAdapter.notifyItemRemoved(position);
                                 memoAdapter.notifyItemRangeChanged(position, memoList.size());
                                 memoAdapter.notifyDataSetChanged();
-
-
                                 showEmptyMemo();
                             }
                         })
@@ -259,12 +233,9 @@ public class MemoActivity extends AppCompatActivity {
 
         final AlertDialog alertDialog = builder.create();
         alertDialog.show();
-
-
     }
 
     private void updateData(final int position) {
-
 
         LayoutInflater layoutInflaterAndroid = LayoutInflater.from(getApplicationContext());
         View view = layoutInflaterAndroid.inflate(R.layout.memo_dialog, null);
@@ -276,7 +247,6 @@ public class MemoActivity extends AppCompatActivity {
 
         TextView dialogTitle = view.findViewById(R.id.dialog_title);
         dialogTitle.setText("Update Memo");
-
 
         memo = memoList.get(position);
         if (memo != null) {
@@ -300,10 +270,7 @@ public class MemoActivity extends AppCompatActivity {
             }
         });
 
-
-
        updateDisplay();
-
 
         alertDialogBuilderUserInput
                 .setCancelable(false)
@@ -321,11 +288,9 @@ public class MemoActivity extends AppCompatActivity {
         final AlertDialog alertDialog = alertDialogBuilderUserInput.create();
         alertDialog.show();
 
-
         alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 if (TextUtils.isEmpty(editMemo.getText().toString())) {
                     Toast.makeText(MemoActivity.this, "Enter Memo!", Toast.LENGTH_SHORT).show();
                     return;
@@ -337,19 +302,11 @@ public class MemoActivity extends AppCompatActivity {
                     alertDialog.dismiss();
 
                 }
-
-
-
             }
         });
     }
 
-
-
-
     private void updateDisplay() {
-
-
         date1 = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year1, int monthOfYear,
@@ -380,14 +337,10 @@ public class MemoActivity extends AppCompatActivity {
             textmemo.setVisibility(View.VISIBLE);
         } else {
             textmemo.setVisibility(View.GONE);
-
         }
-
     }
 
-
     private void createMemo() {
-
         SQLiteDatabase db = dbh.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("date", date);
@@ -395,8 +348,6 @@ public class MemoActivity extends AppCompatActivity {
         db.insert("memotable", null, values);
 
         Toast.makeText(getApplicationContext(), "Memo Created", Toast.LENGTH_LONG).show();
-
-
     }
 
     private void setData() {
@@ -412,11 +363,9 @@ public class MemoActivity extends AppCompatActivity {
 
             } while (c.moveToNext());
         }
-
     }
 
     private void deleteData(int position) {
-
         memo = memoList.get(position);
         SQLiteDatabase db = dbh.getWritableDatabase();
         db.delete("memotable", "id=" + memo.getId(), null);
@@ -425,7 +374,6 @@ public class MemoActivity extends AppCompatActivity {
     }
 
     private void updateMemo(String memoedit, int position) {
-      
         memo = memoList.get(position);
         memo.setEvent(memoedit);
         memo.setDate(date);
@@ -442,7 +390,5 @@ public class MemoActivity extends AppCompatActivity {
         showEmptyMemo();
 
     }
-
-
 }
 

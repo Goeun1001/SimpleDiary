@@ -4,14 +4,11 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.example.admin.androidsqlite.model.Memo;
-
 /**
  * Created by admin on 19-04-2018.
  */
 
 public class DatabaseHelper extends SQLiteOpenHelper {
-
     //Databae Name
     public static final String DATABASE_NAME="memo.db";
 
@@ -22,16 +19,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
-
     //Create table
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("Create table if not exists memotable( id INTEGER PRIMARY KEY AUTOINCREMENT,date TEXT,event TEXT)");
-
     }
 
-
-//Upgrade database
+    //Upgrade database
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
            //Drop table if exists
@@ -40,6 +34,4 @@ public class DatabaseHelper extends SQLiteOpenHelper {
          //Create table again
          onCreate(db);
     }
-
-
 }
