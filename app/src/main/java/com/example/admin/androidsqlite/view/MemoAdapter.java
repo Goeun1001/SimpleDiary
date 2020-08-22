@@ -37,21 +37,21 @@ public class MemoAdapter extends RecyclerView.Adapter<MemoAdapter.MyViewHolder>{
     public class MyViewHolder extends RecyclerView.ViewHolder{
         public TextView textmemo;
         public TextView textdate;
-        public ImageView imageView;
+        public ImageView feeling;
+        public ImageView weather;
         public RelativeLayout  viewForeground;
 
 
         public MyViewHolder(View itemView) {
             super(itemView);
 
-            imageView=itemView.findViewById(R.id.imageView);
+            feeling=itemView.findViewById(R.id.feelingImage);
+            weather=itemView.findViewById(R.id.weatherImage);
             textmemo=itemView.findViewById(R.id.textmemo);
             textdate=itemView.findViewById(R.id.textdate);
             viewForeground=itemView.findViewById(R.id.view_foreground);
         }
     }
-
-
 
 
     @Override
@@ -72,12 +72,12 @@ public class MemoAdapter extends RecyclerView.Adapter<MemoAdapter.MyViewHolder>{
        Memo memo=memoList.get(position);
        holder.textdate.setText(memo.getDate());
        holder.textmemo.setText(memo.getEvent());
-       Drawable drawable = context.getResources().getDrawable(R.drawable.smile);
-       holder.imageView.setImageDrawable(drawable);
-
+       Drawable feelingDrawable = context.getResources().getDrawable(R.drawable.smile);
+       Drawable weatherDrawable = context.getResources().getDrawable(R.drawable.smile);
+       holder.feeling.setImageDrawable(feelingDrawable);
+       holder.feeling.setImageDrawable(weatherDrawable);
 
     }
-
 
     @Override
     public int getItemCount() {

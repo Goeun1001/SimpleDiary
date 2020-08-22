@@ -10,5 +10,5 @@
     <dimen name="dot_height">30dp</dimen>
     <dimen name="dot_size">40sp</dimen>
     <dimen name="dimen_14">14sp</dimen>
-    <dimen name="memo_list">18sp</dimen>
+    <dimen name="memo_list">30sp</dimen>
 </resources>
