@@ -1,15 +1,14 @@
 package com.example.admin.androidsqlite.view;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
-
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 
 import com.example.admin.androidsqlite.R;
 import com.example.admin.androidsqlite.model.Memo;
@@ -38,12 +37,14 @@ public class MemoAdapter extends RecyclerView.Adapter<MemoAdapter.MyViewHolder>{
     public class MyViewHolder extends RecyclerView.ViewHolder{
         public TextView textmemo;
         public TextView textdate;
+        public ImageView imageView;
         public RelativeLayout  viewForeground;
 
 
         public MyViewHolder(View itemView) {
             super(itemView);
 
+            imageView=itemView.findViewById(R.id.imageView);
             textmemo=itemView.findViewById(R.id.textmemo);
             textdate=itemView.findViewById(R.id.textdate);
             viewForeground=itemView.findViewById(R.id.view_foreground);
@@ -71,7 +72,8 @@ public class MemoAdapter extends RecyclerView.Adapter<MemoAdapter.MyViewHolder>{
        Memo memo=memoList.get(position);
        holder.textdate.setText(memo.getDate());
        holder.textmemo.setText(memo.getEvent());
-
+       Drawable drawable = context.getResources().getDrawable(R.drawable.smile);
+       holder.imageView.setImageDrawable(drawable);
 
 
     }

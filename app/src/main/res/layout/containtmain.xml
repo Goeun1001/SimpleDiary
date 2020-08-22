@@ -26,4 +26,6 @@
         android:textColor="@color/color_no_memo"
         android:textSize="@dimen/margin_no_memo" />
 
+
+
 </RelativeLayout>

@@ -3,20 +3,22 @@ package com.example.admin.androidsqlite.view;
 import android.app.DatePickerDialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Canvas;
+import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -25,15 +27,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.admin.androidsqlite.R;
+import com.example.admin.androidsqlite.database.DatabaseHelper;
 import com.example.admin.androidsqlite.model.Memo;
+import com.example.admin.androidsqlite.utils.MyDividerItemDecoration;
+import com.example.admin.androidsqlite.utils.RecyclerTouchListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-
-import com.example.admin.androidsqlite.database.*;
-import com.example.admin.androidsqlite.utils.MyDividerItemDecoration;
-import com.example.admin.androidsqlite.utils.RecyclerTouchListener;
 
 public class MemoActivity extends AppCompatActivity {
 
@@ -109,12 +110,42 @@ public class MemoActivity extends AppCompatActivity {
 
     }
 
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        //return super.onCreateOptionsMenu(menu);
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.mainmenu, menu);
+        return true;
+    }
+
+    //추가된 소스, ToolBar에 추가된 항목의 select 이벤트를 처리하는 함수
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        //return super.onOptionsItemSelected(item);
+        switch (item.getItemId()) {
+            case R.id.menu_search:
+                // User chose the "Settings" item, show the app settings UI...
+                Intent intent = new Intent(getApplicationContext(), StaticsActivity.class);
+                startActivity(intent);
+                Toast.makeText(getApplicationContext(), "환경설정 버튼 클릭됨", Toast.LENGTH_LONG).show();
+                return true;
+
+            default:
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                Toast.makeText(getApplicationContext(), "나머지 버튼 클릭됨", Toast.LENGTH_LONG).show();
+                return super.onOptionsItemSelected(item);
+
+        }
+    }
+
     private void showMemoDialog() {
 
         myCalendar = Calendar.getInstance();
         year = myCalendar.get(Calendar.YEAR);
         month = myCalendar.get(Calendar.MONTH);
         day = myCalendar.get(Calendar.DAY_OF_MONTH);
+
 
         LayoutInflater layoutInflaterAndroid = LayoutInflater.from(getApplicationContext());
         View view = layoutInflaterAndroid.inflate(R.layout.memo_dialog, null);
@@ -124,6 +155,10 @@ public class MemoActivity extends AppCompatActivity {
         textDate = view.findViewById(R.id.txtdate);
         TextView dialogTitle = view.findViewById(R.id.dialog_title);
         ImageButton datebtn = view.findViewById(R.id.imgdate);
+
+
+
+
         dialogTitle.setText("Add Memo");
         if (month + 1 < 10) {
             textDate.setText(new StringBuilder()
